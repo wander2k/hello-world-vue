@@ -128,3 +128,8 @@ dist
 # TernJS port file
 .tern-port
 >>>>>>> 68d361b8e9a397174ad320d22881e98728b6acf3
+
+# Cordova
+/cordova/platforms
+/cordova/plugins
+/public/cordova.js
