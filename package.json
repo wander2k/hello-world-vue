@@ -24,8 +24,11 @@
     "cordova-serve-osx": "cross-env CORDOVA_PLATFORM=osx vue-cli-service cordova-serve-osx"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "cordova-android": "^10.0.1",
+    "core-js": "^3.16.1",
+    "vue": "^2.6.11",
+    "vue-cordova": "^0.1.2",
+    "wander2k.vue.cordova.demo": "file:cordova"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

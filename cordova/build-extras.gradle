@@ -1,0 +1,6 @@
+// !!!copy this file to platforms/android !!!
+android {
+    lintOptions {
+        checkReleaseBuilds false;
+    }
+}
