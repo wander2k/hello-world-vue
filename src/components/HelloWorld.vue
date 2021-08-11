@@ -86,6 +86,8 @@
     <p>key: {{ key }}</p>
     <p>keyCode: {{ keyCode }}</p>
     <button v-on:click="scannerTest">Scanner</button>
+    <p>camera present : {{ cameraPresent }}</p>
+    <p>camera available: {{ cameraAvailable }}</p>
   </div>
 </template>
 
@@ -97,6 +99,8 @@ export default {
     key: Number,
     keyCode: String,
     keyInput: String,
+    cameraPresent: Boolean,
+    cameraAvailable: Boolean,
   },
   mounted() {
     document.addEventListener("keydown", this.onKeyDown);
@@ -111,6 +115,7 @@ export default {
     },
 
     scannerTest: function (event) {
+      let self = this;
       var str = JSON.stringify(window.cordova.plugins.barcodeScanner);
       console.log(str);
       console.log(event);
@@ -118,13 +123,31 @@ export default {
 
       window.cordova.plugins.diagnostic.isCameraPresent(
         function (present) {
+          self.cameraPresent = present;
           console.log("Camera is " + (present ? "present" : "absent"));
         },
         function (error) {
           console.error("The following error occurred: " + error);
         }
       );
-      // try {
+
+      window.cordova.plugins.diagnostic.requestCameraAuthorization(
+        function (status) {
+          console.log(
+            "Authorization request for camera use was " +
+              (status == window.cordova.plugins.diagnostic.permissionStatus.GRANTED
+                ? "granted"
+                : "denied")
+          );
+          self.cameraAvailable = status == window.cordova.plugins.diagnostic.permissionStatus.GRANTED
+                ? true
+                : false;
+        },
+        function (error) {
+          console.error("The following error occurred: " + error);
+        },
+        false
+      ); // try {
       //   window.cordova.plugins.barcodeScanner.scan(
       //     function (result) {
       //       alert(
