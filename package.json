@@ -28,6 +28,7 @@
     "core-js": "^3.16.1",
     "vue": "^2.6.11",
     "vue-cordova": "^0.1.2",
+    "vue-router": "^3.5.2",
     "wander2k.vue.cordova.demo": "file:cordova"
   },
   "devDependencies": {

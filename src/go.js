@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
+import Go from './Go.vue'
+import router from './router_go'
 import VueCordova from 'vue-cordova'
 Vue.use(VueCordova)
 
@@ -13,7 +13,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
-  render: h => h(App),
+  render: h => h(Go),
 }).$mount('#app');
 
-router.push("/");
