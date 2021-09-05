@@ -17,6 +17,8 @@ export default {
   mounted() {
     document.addEventListener("keydown", this.onKeyDown);
     document.addEventListener("deviceready", this.onDeviceReady, false);
+    console.log(this.$route.query.inputDate); 
+    this.msg = "See me? Second Screen!!" + this.$route.query.inputDate;
   },
   beforeDestroy() {
     //document.removeEventListener("keydown", this.onKeyDown);
@@ -24,7 +26,8 @@ export default {
   methods: {
     onDeviceReady() {
       console.log("device ready....");
-      this.msg = "See me? Second Screen?";
+      console.log(this.$route.query.inputDate); 
+      this.msg = "See me? Second Screen!!" + this.$route.query.inputDate;
     },   
   },
 };

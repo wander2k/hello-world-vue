@@ -6,6 +6,7 @@
     <button v-on:click="cameraTest">Camera Test</button>
     <button v-on:click="scannerTest">Scanner Test</button>
     <button v-on:click="inappbrowserTest">InAppBrowserTest</button>
+    <button v-on:click="inappbrowserClose">InappbrowserClose</button>
     <button v-on:click="routerTest">RouterTest</button>
     <p>camera present : {{ cameraPresent }}</p>
     <p>camera available: {{ cameraAvailable }}</p>    
@@ -14,6 +15,7 @@
 </template>
 
 <script>
+
 export default {
   name: "HelloWorld",
   props: {
@@ -22,21 +24,47 @@ export default {
     keyCode: String,
     cameraPresent: Boolean,
     cameraAvailable: Boolean,
-    note : String
+    note : String,
+    InAppBrowserRef : Object
   },
   mounted() {
     document.addEventListener("keydown", this.onKeyDown);
     document.addEventListener("deviceready", this.onDeviceReady, false);
   },
+  created() {
+     window.addEventListener("beforeunload", this.onBeforeunload);
+  },
   beforeDestroy() {
     document.removeEventListener("keydown", this.onKeyDown);
   },
   methods: {
+   getNowYMD(){
+      var dt = new Date();
+      var y = dt.getFullYear();
+      var m = ("00" + (dt.getMonth()+1)).slice(-2);
+      var d = ("00" + dt.getDate()).slice(-2);
+      var result = y + "/" + m + "/" + d;
+      return result;
+    },
+
+    onBeforeunload() {
+      this.InAppBrowserRef.close();
+    },
     onDeviceReady() {
       console.log("device ready....");
       console.log(navigator.camera);
       var str = JSON.stringify(navigator.camera);
       this.note = str;
+
+      const nowDt = this.getNowYMD();
+      
+      var url = "file:///android_asset/www/go.html#/?inputDate=" + nowDt;
+      console.log(url);
+      var ref = window.cordova.InAppBrowser.open(url, '_blank', 'location=no');
+      // var ref = window.cordova.InAppBrowser.open(url, '_self', 'location=yes');
+      this.InAppBrowserRef = ref;
+      console.log(ref);
+
     },   
 
     routerTest() {
@@ -44,6 +72,10 @@ export default {
        this.$router.push("/second");
        console.log(window.location.href);
        console.log("end routerTest");
+    },
+
+    inappbrowserClose() {
+      this.InAppBrowserRef.close();
     },
 
     inappbrowserTest() {
@@ -55,7 +87,7 @@ export default {
       console.log(url);
       var ref = window.cordova.InAppBrowser.open(url, '_blank', 'location=no');
       // var ref = window.cordova.InAppBrowser.open(url, '_self', 'location=yes');
-      
+      this.InAppBrowserRef = ref;
       console.log(ref);
     },
 

@@ -152,16 +152,6 @@ public class InAppBrowser extends CordovaPlugin {
     private String[] allowedSchemes;
     private InAppBrowserClient currentClient;
 
-    static CordovaWebView cordovaWebView;
-    static CordovaInterface cordovaInterface;
-
-    @Override
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordova, webView);
-
-        cordovaWebView = webView;
-        cordovaInterface = cordova;
-    }    
     /**
      * Executes the request and returns PluginResult.
      *
@@ -340,6 +330,9 @@ public class InAppBrowser extends CordovaPlugin {
                 public void run() {
                     if (dialog != null && !cordova.getActivity().isFinishing()) {
                         dialog.hide();
+                    }
+                    if (dialogPre != null && !cordova.getActivity().isFinishing()) {
+                        dialogPre.hide();
                     }
                 }
             });
@@ -547,6 +540,10 @@ public class InAppBrowser extends CordovaPlugin {
                         if (dialog != null && !cordova.getActivity().isFinishing()) {
                             dialog.dismiss();
                             dialog = null;
+                        }
+                        if (dialogPre != null && !cordova.getActivity().isFinishing()) {
+                            dialogPre.dismiss();
+                            dialogPre = null;
                         }
                     }
                 });
